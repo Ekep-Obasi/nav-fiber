@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import React, { useEffect, useRef, useState } from 'react'
 import { useFormContext } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { ClipLoader } from 'react-spinners'
 import styled from 'styled-components'
 import { SelectWithPopover } from '~/components/App/SideBar/Dropdown'
@@ -25,7 +25,6 @@ import { Trending } from '../Trending'
 
 export const MENU_WIDTH = 390
 
-// eslint-disable-next-line react/display-name
 export const RegularView = () => {
   const { isFetching: isLoading, setSidebarFilter } = useDataStore((s) => s)
 
@@ -42,6 +41,8 @@ export const RegularView = () => {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isFilterOpen, setIsFilterOpen] = useState(false)
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+  const [searchParams] = useSearchParams()
+  const query = searchParams.get('q') ?? ''
 
   useEffect(() => {
     setValue('search', searchFormValue)
@@ -85,7 +86,7 @@ export const RegularView = () => {
       <SearchWrapper className={clsx({ 'has-shadow': isScrolled })}>
         <SearchFilterIconWrapper>
           <Search>
-            <SearchBar />
+            <SearchBar defaultQuery={query} />
             <InputButton
               data-testid="search_action_icon"
               onClick={() => {

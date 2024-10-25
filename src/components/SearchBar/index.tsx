@@ -7,6 +7,7 @@ type Props = {
   loading?: boolean
   onSubmit?: () => void
   placeholder?: string
+  defaultQuery?: string
 }
 
 const Input = styled.input.attrs(() => ({
@@ -59,7 +60,7 @@ const Input = styled.input.attrs(() => ({
     `}
 `
 
-export const SearchBar = ({ loading, placeholder = 'Search', onSubmit }: Props) => {
+export const SearchBar = ({ loading, placeholder = 'Search', onSubmit, defaultQuery = '' }: Props) => {
   const { register, watch } = useFormContext()
 
   const typing = watch('search')
@@ -68,6 +69,7 @@ export const SearchBar = ({ loading, placeholder = 'Search', onSubmit }: Props) 
   return (
     <Input
       {...register('search')}
+      data-testid="search_input"
       disabled={loading}
       id="main-search"
       onKeyPress={(event) => {
@@ -89,6 +91,7 @@ export const SearchBar = ({ loading, placeholder = 'Search', onSubmit }: Props) 
       }}
       placeholder={placeholder}
       type="text"
+      value={defaultQuery}
     />
   )
 }
